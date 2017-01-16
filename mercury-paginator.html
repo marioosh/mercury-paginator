@@ -520,18 +520,19 @@ Example:
     range: function () {
         var paginations = [],
             i,
-            pageCount = this.getPageCount();
+            pageCount = this.getPageCount(),
+            adjacents = this.adjacents || 3;
 
-        if (pageCount-1 < this.rangeSize + (this.adjacents * 2))   //not enough pages to bother breaking it up
+        if (pageCount-1 < this.rangeSize + (adjacents * 2))   //not enough pages to bother breaking it up
         {
             for (i = 0; i <= pageCount; i++)
             {
                 paginations.push(i);
             }
 
-        } else if(pageCount-1 > this.rangeSize + (this.adjacents * 2)){   //enough pages to hide some
+        } else if(pageCount-1 > this.rangeSize + (adjacents * 2)){   //enough pages to hide some
             //close to beginning; only hide later pages
-            if(this.currentpage < 1 + (this.adjacents * 2))
+            if(this.currentpage < 1 + (adjacents * 2))
             {
                 for (i=0; i<this.rangeSize; i++)
                 {
@@ -539,15 +540,15 @@ Example:
                 }
             }
             //in middle; hide some front and some back
-            else if(pageCount - (this.adjacents) > this.currentpage && this.currentpage > (this.adjacents * 2))
+            else if(pageCount - (adjacents) > this.currentpage && this.currentpage > (adjacents * 2))
             {
-                for (i = this.currentpage - this.adjacents; i <= this.currentpage + this.adjacents; i++)
+                for (i = this.currentpage - adjacents; i <= this.currentpage + adjacents; i++)
                 {
                     paginations.push(i);
                 }
             } else{
                 //close to end; only hide early pages
-                for (i = pageCount - ((this.adjacents*2)); i <= pageCount; i++)
+                for (i = pageCount - ((adjacents*2)); i <= pageCount; i++)
                 {
                     paginations.push(i);
                 }
